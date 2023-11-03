@@ -2,20 +2,21 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ClientResource\Pages;
-use App\Filament\Resources\ClientResource\RelationManagers;
-use App\Models\Client;
-use Filament\Forms\Components\DatePicker;
+use App\Filament\Resources\WebsiteGroupResource\Pages;
+use App\Filament\Resources\WebsiteGroupResource\RelationManagers;
+use App\Models\WebsiteGroup;
+use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ClientResource extends Resource
+class WebsiteGroupResource extends Resource
 {
-    protected static ?string $model = Client::class;
+    protected static ?string $model = WebsiteGroup::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -24,8 +25,6 @@ class ClientResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name'),
-                TextInput::make('email')->email(),
-                DatePicker::make('born_on'),
             ]);
     }
 
@@ -33,9 +32,10 @@ class ClientResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
-                TextColumn::make('email'),
-                TextColumn::make('born_on'),
+                //
+            ])
+            ->filters([
+                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -57,9 +57,9 @@ class ClientResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListClients::route('/'),
-            'create' => Pages\CreateClient::route('/create'),
-            'edit' => Pages\EditClient::route('/{record}/edit'),
+            'index' => Pages\ListWebsiteGroups::route('/'),
+            'create' => Pages\CreateWebsiteGroup::route('/create'),
+            'edit' => Pages\EditWebsiteGroup::route('/{record}/edit'),
         ];
     }
 }
