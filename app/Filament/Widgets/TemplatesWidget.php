@@ -6,17 +6,18 @@ use App\Models\SchemeTemplatePart;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Tables\Actions\CreateAction;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use SolutionForest\FilamentTree\Components\Tree;
 use SolutionForest\FilamentTree\Widgets\Tree as BaseWidget;
 
 class TemplatesWidget extends BaseWidget
 {
+    public ?Model $record = null;
+
     protected static string $model = SchemeTemplatePart::class;
 
-    protected static int $maxDepth = 2;
+    protected static int $maxDepth = 999;
 
     protected ?string $treeTitle = 'TemplatesWidget';
 
@@ -50,6 +51,10 @@ class TemplatesWidget extends BaseWidget
                 ]),
             TextInput::make('condition')
                 ->required()
+                ->maxLength(255)
+                ->type('number'),
+            TextInput::make('name')
+                ->required()
                 ->maxLength(255),
             TextInput::make('display_text')
                 ->required()
@@ -57,22 +62,22 @@ class TemplatesWidget extends BaseWidget
         ];
     }
 
-    public function getRecords(): Collection | null
+    public function getRecords(): Collection|null
     {
         if ($this->records) {
             return $this->records;
         }
-        return $this->records = $this->getSortedQuery()->get();
-    }
-
-    protected function filterCollectionDataDownToSpecificKeys($data, $ruleKeys, $fieldKeys)
-    {
+        $query = $this->getSortedQuery();
+        if ($this->record) {
+            $query->where('schemeTemplate_id', '=', $this->record->id);
+        }
+        return $this->records = $query->get();
     }
 
     public function getTreeRecordTitle(?Model $record = null): string
     {
         $runCode = str_replace('__DISPLAY_TEXT__', $record->display_text, $record->schemePart->code);
-        return $record->schemeTemplate->name . ': if < ' . $record->condition . ' => ' . $runCode;
+        return 'if(execute(' . $record->condition . ', \'' . $record->name . '\')) => ' . $runCode;
     }
 
     protected function hasDeleteAction(): bool

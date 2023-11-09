@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SchemeResource\Pages;
+use App\Filament\Resources\SchemeResource\RelationManagers\SchemeTemplatePartRelationManager;
 use App\Models\SchemeTemplate;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -48,7 +49,7 @@ class SchemeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            SchemeTemplatePartRelationManager::class
         ];
     }
 

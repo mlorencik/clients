@@ -52,6 +52,10 @@ class SchemeTemplatePartsResource extends Resource
                     ]),
                 TextInput::make('condition')
                     ->required()
+                    ->type('number')
+                    ->maxLength(255),
+                TextInput::make('name')
+                    ->required()
                     ->maxLength(255),
                 TextInput::make('display_text')
                     ->required()
@@ -69,6 +73,7 @@ class SchemeTemplatePartsResource extends Resource
                 TextColumn::make('schemeTemplate.name')->searchable('name'),
                 TextColumn::make('schemePart.name')->searchable('name'),
                 TextColumn::make('condition')->searchable(),
+                TextColumn::make('name')->searchable(),
                 TextColumn::make('display_text')->searchable(),
             ])
             ->filters([

@@ -16,6 +16,7 @@ class SchemeTemplatePart extends Model
         'schemeTemplate_id',
         'schemePart_id',
         'parent_part_id',
+        'name',
         'order',
         'condition',
         'display_text'

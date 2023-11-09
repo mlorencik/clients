@@ -18,10 +18,4 @@ class ListSchemeParts extends ListRecords
         ];
     }
 
-    protected function getHeaderWidgets(): array
-    {
-        return [
-            TemplatesWidget::class
-        ];
-    }
 }

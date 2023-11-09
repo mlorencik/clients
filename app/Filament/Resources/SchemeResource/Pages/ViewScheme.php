@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\SchemeResource\Pages;
 
 use App\Filament\Resources\SchemeResource;
+use App\Filament\Widgets\TemplatesWidget;
 use App\Models\SchemeTemplate;
 use Filament\Actions;
 use Filament\Forms\Components\Textarea;
@@ -40,5 +41,12 @@ class ViewScheme extends ViewRecord
         $data['code'] = SchemeTemplate::makeTree($parts, -1, 0);
 
         return $data;
+    }
+
+    protected function getFooterWidgets(): array
+    {
+        return [
+            TemplatesWidget::class
+        ];
     }
 }

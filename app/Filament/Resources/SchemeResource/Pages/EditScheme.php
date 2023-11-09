@@ -19,4 +19,10 @@ class EditScheme extends EditRecord
         ];
     }
 
+    protected function getFooterWidgets(): array
+    {
+        return [
+            TemplatesWidget::class
+        ];
+    }
 }

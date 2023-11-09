@@ -30,7 +30,7 @@ class SchemeTemplate extends Model
         foreach ($data as $part) {
             if ($part->parent_part_id === $parent) {
                 $runCode = str_replace('__DISPLAY_TEXT__', $part->display_text, $part->schemePart->code);
-                $code .= $codeDeep . 'if(randomNumber(1,100) < ' . $part->condition . '){' . PHP_EOL;
+                $code .= $codeDeep . 'if(execute(' . $part->condition . ', \'' .$part->name . '\')){' . PHP_EOL;
                 $code .= $codeDeep . '    ' . $runCode . PHP_EOL;
                 $code .= self::makeTree($data, $part->id, $deep + 1);
                 $code .= $codeDeep . '}' . PHP_EOL;
