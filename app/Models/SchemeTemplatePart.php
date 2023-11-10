@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use http\Client\Request;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use SolutionForest\FilamentTree\Concern\ModelTree;
 
 class SchemeTemplatePart extends Model
 {
     use ModelTree;
+    protected $primarykey = 'id';
 
     protected $fillable = [
         'schemeTemplate_id',
@@ -36,6 +36,14 @@ class SchemeTemplatePart extends Model
     public function schemePart(): BelongsTo
     {
         return $this->belongsTo(SchemePart::class, 'schemePart_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function schemeTemplatePart(): BelongsTo
+    {
+        return $this->belongsTo(SchemeTemplatePart::class, 'parent_part_id');
     }
 
     /**

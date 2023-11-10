@@ -6,7 +6,7 @@ return [
      */
     'column_name' => [
         'order' => 'order',
-        'parent_part_id' => 'parent',
+        'parent' => 'parent_id',
         'title' => 'title',
     ],
     /**

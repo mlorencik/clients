@@ -6,6 +6,7 @@ use App\Filament\Resources\SchemeTemplatePartsResource\Pages;
 use App\Filament\Resources\SchemeTemplatePartsResource\RelationManagers\SchemeTemplateRelationManager;
 use App\Models\SchemeTemplate;
 use App\Models\SchemeTemplatePart;
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -59,7 +60,7 @@ class SchemeTemplatePartsResource extends Resource
                     ->maxLength(255),
                 TextInput::make('display_text')
                     ->required()
-                    ->maxLength(255)
+                    ->maxLength(255),
             ]);
     }
 

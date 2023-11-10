@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\SchemeTemplatePart;
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -17,7 +18,7 @@ class TemplatesWidget extends BaseWidget
 
     protected static string $model = SchemeTemplatePart::class;
 
-    protected static int $maxDepth = 999;
+    protected static int $maxDepth = 10;
 
     protected ?string $treeTitle = 'TemplatesWidget';
 
@@ -58,7 +59,15 @@ class TemplatesWidget extends BaseWidget
                 ->maxLength(255),
             TextInput::make('display_text')
                 ->required()
-                ->maxLength(255)
+                ->maxLength(255),
+            TextInput::make('parent_part_id')
+                ->required()
+                ->type('number')
+                ->maxLength(255),
+            TextInput::make('order')
+                ->required()
+                ->type('number')
+                ->maxLength(255),
         ];
     }
 
@@ -77,7 +86,7 @@ class TemplatesWidget extends BaseWidget
     public function getTreeRecordTitle(?Model $record = null): string
     {
         $runCode = str_replace('__DISPLAY_TEXT__', $record->display_text, $record->schemePart->code);
-        return 'if(execute(' . $record->condition . ', \'' . $record->name . '\')) => ' . $runCode;
+        return $record->id . ': if(execute(' . $record->condition . ', \'' . $record->name . '\')) => ' . $runCode;
     }
 
     protected function hasDeleteAction(): bool

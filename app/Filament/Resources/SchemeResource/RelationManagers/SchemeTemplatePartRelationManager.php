@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\SchemeResource\RelationManagers;
 
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -13,6 +14,7 @@ use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\TextInputColumn;
 use Filament\Tables\Table;
 
 class SchemeTemplatePartRelationManager extends RelationManager
@@ -45,7 +47,16 @@ class SchemeTemplatePartRelationManager extends RelationManager
                     ->maxLength(255),
                 TextInput::make('display_text')
                     ->required()
-                    ->maxLength(255)
+                    ->maxLength(255),
+                TextInput::make('parent_part_id')
+                    ->required()
+                    ->type('number')
+                    ->maxLength(255),
+                TextInput::make('order')
+                    ->required()
+                    ->type('number')
+                    ->maxLength(255),
+                TextInput::make('order'),
             ]);
     }
 
@@ -54,10 +65,13 @@ class SchemeTemplatePartRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
+                TextColumn::make('id'),
                 TextColumn::make('schemePart.name')->searchable('name'),
-                TextColumn::make('condition')->searchable(),
-                TextColumn::make('name')->searchable(),
-                TextColumn::make('display_text')->searchable(),
+                TextInputColumn::make('condition')->searchable(),
+                TextInputColumn::make('name')->searchable(),
+                TextInputColumn::make('display_text')->searchable(),
+                TextInputColumn::make('parent_part_id'),
+                TextInputColumn::make('order'),
             ])
             ->filters([
                 //
